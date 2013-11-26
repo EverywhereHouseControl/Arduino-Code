@@ -8,7 +8,7 @@ int pinRelay2 = 3;
 int stateRelay1;
 int stateRelay2;
 int stateExtInput;
-int previousInputStateInputState = LOW;
+int previousInputState = LOW;
 long time = 0;
 long debounce = 500;
 boolean firstTime = true;
@@ -18,13 +18,15 @@ void setup() {
 }
 
 void loop() {
-  //  Set up one relay to high and the other to low in the first iteration
-  if(firsTime){
+  
+  if(firstTime){
     preparation_LightControl(pinRelay1, pinRelay2, stateRelay1, stateRelay2);
-    firsTime = false;
+    firstTime = false;
   }
   perform_LightControl(stateExtInput, previousInputState, pinExtInput, pinRelay1,
                           pinRelay2, stateRelay1, stateRelay2, time, debounce);
+                          
+  int a = test_modular_design(9);
 }
 
 
@@ -37,9 +39,9 @@ void setup_LightControl(int pinExtInput, int pinRelay1, int pinRelay2){
 }
 
 void preparation_LightControl(int pinRelay1, int pinRelay2, int stateRelay1, int stateRelay2){
-  digitalWrite(intRelay1, HIGH);
+  digitalWrite(pinRelay1, HIGH);
   stateRelay1 = HIGH;
-  digitalWrite(intRelay2, LOW);
+  digitalWrite(pinRelay2, LOW);
   stateRelay2 = LOW;
 }
 
@@ -48,7 +50,7 @@ void perform_LightControl(int stateExtInput, int previousInputState, int pinExtI
                           long time, long debounce){
                             
   stateExtInput = digitalRead(pinExtInput);  
-  if(stateExtInput == HIGH && previousInputStateInputState == LOW && millis() - time > debounce) {
+  if(stateExtInput == HIGH && previousInputState == LOW && millis() - time > debounce) {
     if(stateRelay1 == HIGH){
       stateRelay1 = LOW;
       stateRelay2 = HIGH;
