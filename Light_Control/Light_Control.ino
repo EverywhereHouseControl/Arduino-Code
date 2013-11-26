@@ -1,36 +1,6 @@
-/*  this sketch simules a changeover switch behavior 
-    using two relays and sn external input
+/*  this sketch simules a changeover switch behavior using two relays 
+    and an external input
 */
-
-int pinExtInput = 8;
-int pinRelay1 = 2;
-int pinRelay2 = 3;
-int stateRelay1;
-int stateRelay2;
-int stateExtInput;
-int previousInputState = LOW;
-long time = 0;
-long debounce = 500;
-boolean firstTime = true;
-
-void setup() {
-  setup_LightControl(pinExtInput, pinRelay1, pinRelay2);
-}
-
-void loop() {
-  
-  if(firstTime){
-    preparation_LightControl(pinRelay1, pinRelay2, stateRelay1, stateRelay2);
-    firstTime = false;
-  }
-  perform_LightControl(stateExtInput, previousInputState, pinExtInput, pinRelay1,
-                          pinRelay2, stateRelay1, stateRelay2, time, debounce);
-                          
-  int a = test_modular_design(9);
-}
-
-
-
 
 void setup_LightControl(int pinExtInput, int pinRelay1, int pinRelay2){
   pinMode(pinExtInput, INPUT);
