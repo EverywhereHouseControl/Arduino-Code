@@ -2,8 +2,8 @@ long time = 0;
 long debounce = 500;
 
 int pinExtInput = 8;
-int pinRelay1 = 5;
-int pinRelay2 = 3;
+int pinRelay1 = 4;
+int pinRelay2 = 2;
 int stateRelay1;
 int stateRelay2;
 int stateExtInput;
