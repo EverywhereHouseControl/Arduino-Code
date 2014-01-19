@@ -10,12 +10,12 @@ int stateExtInput;
 int previousInputState = LOW;
 
 void setup() {
-  setup_LightControl(pinExtInput, pinRelay1, pinRelay2, &stateRelay1, &stateRelay2);
+  setup_LightControl(pinExtInput, pinRelay1, &stateRelay1);
 }
 
 void loop() {  
   perform_LightControl(&stateExtInput, &previousInputState, pinExtInput, pinRelay1,
-                          pinRelay2, &stateRelay1, &stateRelay2, &time, debounce);             
+                          &stateRelay1, &time, debounce);             
 }
 
 

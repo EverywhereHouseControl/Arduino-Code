@@ -1,52 +1,48 @@
-/*  this sketch simules a changeover switch behavior using two relays 
+/*  this sketch simules a changeover switch behavior using on relay
     and an external input
 */
 
-void setup_LightControl(int pinExtInput, int pinRelay1, int pinRelay2, int* stateRelay1, int* stateRelay2){
+void setup_LightControl(int pinExtInput, int pinRelay1, int* stateRelay1){
   // pin setup
-  pinMode(pinExtInput, INPUT);
+  //pinMode(pinExtInput, INPUT);
   pinMode(pinRelay1, OUTPUT);
-  pinMode(pinRelay2, OUTPUT);
-  
-  // is necessary to ensure that the relays have different states
+ 
   digitalWrite(pinRelay1, HIGH);
   *stateRelay1 = HIGH;
-  digitalWrite(pinRelay2, LOW);
-  *stateRelay2 = LOW;
+  
   
   // init the serial port
   Serial.begin(9600);
 }
 
 void perform_LightControl(int* stateExtInput, int* previousInputState, int pinExtInput, 
-                          int pinRelay1, int pinRelay2, int* stateRelay1, int* stateRelay2,
+                          int pinRelay1, int* stateRelay1,
                           long* time, long debounce){
   
-  char* input;
+  char input[2];
   
   // read from the serial port if it's possible
   if(Serial.available()){
-    *input = Serial.read();
+    int i=0;
+    while(Serial.available()>0 && i<2){
+      input[i] = Serial.read();
+      i++;
+    }
     
-    if(*input == '0'){
-    // toggle relay states
+    if((input[0] == '0') && (i == 1)){
+    // toggle relay state
       if(*stateRelay1 == HIGH){
         *stateRelay1 = LOW;
-        *stateRelay2 = HIGH;
-        Serial.println("cambio 1");
-        //Serial.println(*input);
       } else {
         *stateRelay1 = HIGH; 
-        *stateRelay2 = LOW; 
-        Serial.println("cambio 2");
-        //Serial.println(*input);
       }
       digitalWrite(pinRelay1, *stateRelay1);
-      delay(10);
-      digitalWrite(pinRelay2, *stateRelay2);
+      Serial.println("fin de bucle");
       delay(1000);
-    } 
+    }    
+    
     Serial.flush();
+    
   }
   
   /*            
@@ -55,16 +51,14 @@ void perform_LightControl(int* stateExtInput, int* previousInputState, int pinEx
   if(*stateExtInput == HIGH && *previousInputState == LOW && (millis() - *time > debounce)) {
     if(*stateRelay1 == HIGH){
       *stateRelay1 = LOW;
-      *stateRelay2 = HIGH;
     } else {
       *stateRelay1 = HIGH; 
-      *stateRelay2 = LOW; 
     }
     *time = millis();
   }
   digitalWrite(pinRelay1, *stateRelay1);
-  digitalWrite(pinRelay2, *stateRelay2);
   *previousInputState == *stateExtInput;
   */
+      
 }
 
