@@ -1,6 +1,5 @@
 
 int contador = 0;          
-IRsend irsend;
 char cadena[2];//cadena a leer del puerto serie (16B como maximo)
 
 void setup(){
@@ -17,7 +16,7 @@ void loop() {
      }
      contador = contador-2;  // solo para Arduino UNO
    
-     loop_IR(cadena, contador, &irsend);
+     loop_IR(cadena, contador);
      contador = 0;
      while(Serial.available())  Serial.read();
   }
