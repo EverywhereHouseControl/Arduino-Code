@@ -1,48 +1,33 @@
-/*  this sketch simules a changeover switch behavior using on relay
+/*  this sketch simules a changeover switch behavior using one relay
     and an external input
 */
 
-void setup_LightControl(int pinExtInput, int pinRelay1, int* stateRelay1){
+void setup_LightControl(int pinRelay1, int* stateRelay1){
+                          //int pinExtInput){
   // pin setup
   //pinMode(pinExtInput, INPUT);
   pinMode(pinRelay1, OUTPUT);
  
   digitalWrite(pinRelay1, HIGH);
   *stateRelay1 = HIGH;
-  
-  
-  // init the serial port
-  Serial.begin(9600);
 }
 
-void perform_LightControl(int* stateExtInput, int* previousInputState, int pinExtInput, 
-                          int pinRelay1, int* stateRelay1,
-                          long* time, long debounce){
-  
-  char input[2];
-  
-  // read from the serial port if it's possible
-  if(Serial.available()){
-    int i=0;
-    while(Serial.available()>0 && i<2){
-      input[i] = Serial.read();
-      i++;
+void perform_LightControl(char input[], int longitud, int pinRelay1, int *stateRelay1){
+                          //int* stateExtInput, int* previousInputState, int pinExtInput, 
+                          //long* time, long debounce){
+    
+  if((input[0] == '0') && (longitud == 1)){
+  // toggle relay state
+    if(*stateRelay1 == HIGH){
+      *stateRelay1 = LOW;
+    } else {
+      *stateRelay1 = HIGH; 
     }
-    
-    if((input[0] == '0') && (i == 1)){
-    // toggle relay state
-      if(*stateRelay1 == HIGH){
-        *stateRelay1 = LOW;
-      } else {
-        *stateRelay1 = HIGH; 
-      }
-      digitalWrite(pinRelay1, *stateRelay1);
-      Serial.println("fin de bucle");
-      delay(1000);
-    }    
-    
-    Serial.flush();
-    
+    digitalWrite(pinRelay1, *stateRelay1);
+    delay(1000);
+  }
+  else{   
+    Serial.print("Entrada invalida");
   }
   
   /*            
