@@ -3,7 +3,7 @@
 */
 
 //  Test global variables
-char input[16];
+//char input[16];
 
 //  Light_Control global variables
 int pinRelay1 = 4;
@@ -21,14 +21,14 @@ void setup(){
 void loop(){
   if(Serial.available()){
     delay(20);  //  necesary to wait the input to be ready
+    char input[16];
     int i=0;
     while(Serial.available()){
       input[i] = Serial.read();
       i++;
-    }
-    
+      
+    }    
     i=i-1;  //  because one character is used to difference functionalities
-    i=i-2;  //  only for arduino UNO
     
     char function = input[i];
     input[i] = '\0';
@@ -40,7 +40,7 @@ void loop(){
         loop_IR(input, i); 
         break;
       default:
-        Serial.println("Entrada no valida");
+        Serial.println("-1");
         break;
     }  
     while(Serial.available()){ Serial.read(); }

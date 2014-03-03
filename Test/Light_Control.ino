@@ -1,5 +1,8 @@
 /*  this sketch simules a changeover switch behavior using one relay
     and an external input
+    Returns:
+      0  -->  There's no error
+      1  -->  The input isn't a '0'
 */
 
 void setup_LightControl(int pinRelay1, int* stateRelay1){
@@ -24,10 +27,11 @@ void perform_LightControl(char input[], int longitud, int pinRelay1, int *stateR
       *stateRelay1 = HIGH; 
     }
     digitalWrite(pinRelay1, *stateRelay1);
-    delay(1000);
+    Serial.println("0");  // Respuesta OK
+    delay(500);
   }
   else{   
-    Serial.print("Entrada invalida");
+    Serial.println("1");  // Respuesta de error
   }
   
   /*            

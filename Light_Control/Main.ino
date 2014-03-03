@@ -27,7 +27,6 @@ void loop() {
       input[i] = Serial.read();
       i++;
     }
-    i=i-2;  //  solo para arduino UNO
     
     perform_LightControl(input, i, pinRelay1, &stateRelay1); 
                          //&stateExtInput, &previousInputState, 
