@@ -49,6 +49,7 @@ public:
   int decode(decode_results *results);
   void enableIRIn();
   void resume();
+  void configIR(int nButtons);//added
 private:
   // These are called by decode
   int getRClevel(decode_results *results, int *offset, int *used, int t1);
@@ -70,6 +71,7 @@ class IRsend
 {
 public:
   IRsend() {}
+  void sendIR(unsigned long data,int nbits,int hz,int protocol);//added
   void sendNEC(unsigned long data, int nbits);
   void sendSony(unsigned long data, int nbits);
   void sendRaw(unsigned int buf[], int len, int hz);

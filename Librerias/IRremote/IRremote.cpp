@@ -60,6 +60,31 @@ int MATCH_SPACE(int measured_ticks, int desired_us) {
 }
 #endif
 
+void IRsend::sendIR(unsigned long data,int nbits,int hz,int protocol){//added
+	switch(protocol){
+		case '1'://NEC
+			sendNEC(data,nbits);
+			break;
+		case '2'://SONY
+			sendSony(data,nbits);
+			break;
+		case '3'://RC5
+			sendRC5(data,nbits);
+			break;
+		case '4'://RC6
+			sendRC6(data,nbits);
+			break;
+		default:
+			sendNEC(data,nbits);
+			break;
+	}
+	
+	#define NEC 1
+#define SONY 2
+#define RC5 3
+#define RC6 4
+}
+
 void IRsend::sendNEC(unsigned long data, int nbits)
 {
   enableIROut(38);
@@ -608,3 +633,28 @@ long IRrecv::decodeRC6(decode_results *results) {
   results->decode_type = RC6;
   return DECODED;
 }
+
+void IRrecv::configIR(int nButtons){//added
+	unsigned long data[nButtons];
+	decode_results results;
+	Serial.println("Bienvenido a la configuracion de su mando EHC");
+	for(int i = 0; i < nButtons;i++){
+		Serial.println("Pulsa siguiente Boton...");
+		while(!decode(&results));
+		data[i] = results.value;
+		Serial.println("Recibido");
+		resume();
+		delay(1000);		
+	}
+	Serial.println("Todos los datos Recibidos!");
+		
+	for(int i = 0; i < nButtons;i++){
+		//Serial.print("Boton "+i+": ");
+		Serial.println(data[i],DEC);		
+	}
+	Serial.println("Configuracion finalizada");
+	resume();
+}
+
+
+
