@@ -15,14 +15,14 @@ int stateRelay1;
 void setup(){
   Serial.begin(9600);  // init Serial port
   setup_LightControl(pinRelay1, &stateRelay1);
-//  setup_IR(); 
+  setup_IR(); 
 }
 
 void loop(){
-//  loop_IR();
+  loop_IR();
   if(Serial.available()){
     delay(20);  //  necesary to wait the input to be ready
-    char input[14];
+    char input[32]="";
     String service;
     String action;
     
@@ -30,36 +30,41 @@ void loop(){
     while(Serial.available()){
       input[i] = Serial.read();
       i++;      
-    }        
+    }
+    Serial.flush();    
     separateInput(i, input, &service, &action);
-    
+    //Serial.println(service);
+    //Serial.println(action);
+     //Serial.print(input); 
     switch(service.toInt()){
-      case 100002:    // this number is this service idService on server database
-        perform_LightControl(action, pinRelay1, &stateRelay1); 
+      case 192:    //lights        
+        Serial.print("192-");
+        perform_LightControl(action, pinRelay1, &stateRelay1);        
+        break;   
+      case 185:    //tv IR
+        Serial.print("185-"); 
+        IR(action);
         break;
-    /*    
-      case '1':    
-        IR(input, i); 
-        break;
-      */
+/*      case 190:  //blinds to-do*/
       default:
         Serial.println("-1");
         break;
     }  
-    while(Serial.available()){ Serial.read(); }
+    Serial.flush();//while(Serial.available()){ Serial.read(); }
+    //delay(500);
   }
 
 }
 
 void separateInput(int iLength, char input[],  String *service, String *action){
   /*
-  input format: xxxxxx-xxxxxx
+  input format: 
   where x is a digit  
   */
   boolean found = false;
   int dashPos = 0;
-  char serviceAux[7];
-  char actionAux[7];
+  char serviceAux[16];
+  char actionAux[32];
   
   
   for(int j=0; j<iLength; j++){
