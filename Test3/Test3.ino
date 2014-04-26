@@ -1,4 +1,4 @@
-/* This is a sketch wich tests IRControl and light control
+/* This is a sketch wich tests IRControl, light control and blinds
 *  in the same Arduino
 */
 
@@ -9,13 +9,19 @@
 int pinRelay1 = 4;
 int stateRelay1;
 
+//***idServices***
+const int service_lights = 200;
+const int service_IR = 193;
+const int service_blinds = 0;
+
 //  IR_Control global variables
 
 
 void setup(){
   Serial.begin(9600);  // init Serial port
   setup_LightControl(pinRelay1, &stateRelay1);
-  setup_IR(); 
+  setup_IR();
+  setup_blinds(); 
 }
 
 void loop(){
@@ -37,15 +43,18 @@ void loop(){
     //Serial.println(action);
      //Serial.print(input); 
     switch(service.toInt()){
-      case 192:    //lights        
-        Serial.print("192-");
+      case service_lights:    //lights        
+        Serial.print(service_lights); Serial.print("-");
         perform_LightControl(action, pinRelay1, &stateRelay1);        
         break;   
-      case 185:    //tv IR
-        Serial.print("185-"); 
+      case service_IR:    //tv IR
+        Serial.print(service_IR); Serial.print("-");
         IR(action);
         break;
-/*      case 190:  //blinds to-do*/
+      case service_blinds:
+          Serial.print(service_blinds); Serial.print("-");
+          action_blinds(action);
+          break;
       default:
         Serial.println("-1");
         break;
