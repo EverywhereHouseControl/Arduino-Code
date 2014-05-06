@@ -4,6 +4,7 @@
       0  -->  There's no error
       1  -->  The input isn't a '0'
 */
+String estado = "OFF";
 
 void setup_LightControl(int pinRelay1, int* stateRelay1){
                           //int pinExtInput){
@@ -13,6 +14,10 @@ void setup_LightControl(int pinRelay1, int* stateRelay1){
  
   digitalWrite(pinRelay1, HIGH);
   *stateRelay1 = HIGH;
+}
+
+void getLightsState(){
+  Serial.println(estado);
 }
 
 void perform_LightControl(String action, int pinRelay1, int *stateRelay1){
@@ -26,6 +31,10 @@ void perform_LightControl(String action, int pinRelay1, int *stateRelay1){
     } else {
       *stateRelay1 = HIGH; 
     }
+    if(estado == "OFF")
+      estado = "ON";
+    else
+      estado = "OFF";
     digitalWrite(pinRelay1, *stateRelay1);
     Serial.println("0");  // Respuesta OK
     delay(500);
@@ -34,4 +43,3 @@ void perform_LightControl(String action, int pinRelay1, int *stateRelay1){
     Serial.println("1");  // Respuesta de error
   }      
 }
-

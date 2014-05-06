@@ -5,19 +5,31 @@ int pinRead_IR = 2;
 IRrecv recIR(pinRead_IR);
 IRsend ir;
 decode_results r;
+String dataA = "0";
 
 void setup_IR(){
-  //Serial.begin(9600);  
+  //Serial.begin(9600);
+  pinMode(12,INPUT);  
   recIR.enableIRIn();
 }
 
 void loop_IR(){
   if(recIR.decode(&r)) {
-    Serial.println(r.value, DEC);
+    dataA = "0";
+    dataA = dataA + r.decode_type;
+    dataA = dataA + r.bits;
+    dataA = dataA + r.value;
+    //Serial.println(data);
     recIR.resume();
   }
 }
+
+void getIRstate(){
+  Serial.println(dataA);
+}
+
 void IR(String s){
+        dataA = s;
         int l = s.length()+1;
         //Serial.println(s);
         char input[l];
@@ -55,7 +67,43 @@ void IR(String s){
 				else
 					j++;    
 			}
-		recIR.configIR(atoi(buttons));
+		//recIR.configIR(atoi(buttons));
+                int nButtons = atoi(buttons);
+                int pulsador = LOW;
+	        String data[nButtons];
+	        decode_results results;
+	        Serial.println("Bienvenido a la configuracion de su mando EHC");
+                Serial.println(nButtons);
+	        for(int i = 0; i < nButtons;i++){
+                  data[i] = "0";
+		  Serial.println("Pulsa siguiente Boton...");
+                    while(!recIR.decode(&results) && pulsador == LOW)
+                      pulsador = digitalRead(12);
+                  delay(1000);
+                  if(pulsador == HIGH){
+                    data[i] = "NULL";
+                    pulsador = LOW;
+                  }
+                  else{
+		    //ltoa(results.decode_type,data[i],10);
+                    data[i] = data[i] + results.decode_type;
+                    //ltoa(results.bits,data[i],10);
+                    data[i] = data[i] + results.bits;
+                    //ltoa(results.value,data[i],10);
+                    data[i] = data[i] + results.value;
+		    Serial.println("Recibido");
+		    recIR.resume();
+		    delay(1000);
+                  }		
+	        }
+	        Serial.println("Todos los datos Recibidos!");
+		
+	        for(int i = 0; i < nButtons;i++){
+		//Serial.print("Boton "+i+": ");
+		  Serial.println(data[i]);		
+	        }
+	        Serial.println("Configuracion finalizada");
+	        recIR.resume();
 		break;
 		}
                 default:
