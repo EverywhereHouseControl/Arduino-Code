@@ -7,33 +7,24 @@ $idService = $_GET["idservice"];
 $idAction  = $_GET["action"]; 
 $data      = $_GET["data"];
 
-switch($command){
-	case "SEND":
-		$host = "127.0.0.1";
-		$user = "ehc";
-		$pass = "ehcontrol1314";
-		$database = "raspEHC";
-		$query = "SELECT serialPort FROM devices WHERE id = $idDevice";
+$host = "127.0.0.1";
+$user = "ehc";
+$pass = "ehcontrol1314";
+$database = "raspEHC";
+$query = "SELECT serialPort FROM devices WHERE id = $idDevice";
 
-		$link = mysql_connect($host, $user, $pass)
-			or die('No se pudo conectar: ' . mysql_error());
+$link = mysql_connect($host, $user, $pass)
+	or die('No se pudo conectar: ' . mysql_error());
 
-		mysql_select_db($database)
-			or die('No se pudo seleccionar la base de datos');
+mysql_select_db($database)
+	or die('No se pudo seleccionar la base de datos');
+$result = mysql_query($query)
+	or die('Consulta fallida: ' . mysql_error());
+list($port) = mysql_fetch_array($result);
+$port1 = "/dev/tty$port";
 
-		$result = mysql_query($query)
-			or die('Consulta fallida: ' . mysql_error());
-
-		list($port) = mysql_fetch_array($result);
-		$port1 = "/dev/tty$port";
-		$arg2 ="$idService-$idAction";
-		$valor = $port1.' '.$arg2;
-		echo exec("/usr/bin/python /home/ehc/scripts/enviar.py $valor");
-		break;
-	case "SCAN":
-		break;
-	default:
-		break;
-}
+$arg2 ="$command-$idService-$idAction";
+$valor = $port1.' '.$arg2;
+echo exec("/usr/bin/python /home/ehc/scripts/enviar.py $valor");
 
 ?>
