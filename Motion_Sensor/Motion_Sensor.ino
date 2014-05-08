@@ -1,29 +1,27 @@
 const int ledPin= 13;
 const int inputPin= 8;
-int state;
+unsigned long last_time;//last time sensor was activated in milliseconds
 
 void setup(){
    pinMode(ledPin, OUTPUT);
    pinMode(inputPin, INPUT);
    Serial.begin(9600);
-   state = LOW;
+   last_time = 0;//first time is 0 ms
+   
 }
 
 void loop(){
 
    int value= digitalRead(inputPin);
    
-   if (value == HIGH && state == LOW){
+   if (((value==HIGH) && (last_time==0 )) || ((value==HIGH) && (last_time+10000<millis()))) {
       digitalWrite(ledPin, HIGH);
       delay(100);
       digitalWrite(ledPin, LOW);
-      Serial.println("100");
+      Serial.println("ON");
       delay(100);
-	  state = HIGH;
+      last_time=millis();
    }
-   else{
-      state = LOW;
-   }
+  //arduino sends "ON" to rasp when sensor is activated and has happened 10 seconds from last activation.
 
 }
-
