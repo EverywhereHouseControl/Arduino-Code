@@ -36,17 +36,17 @@ void action_blinds(String s) {
       case 1:
             digitalWrite(8,HIGH);
             digitalWrite(9,HIGH);
-            Serial.println(1);
+            //Serial.println(1);
             step++;
             break;
       case 0:
             digitalWrite(8,HIGH);
             digitalWrite(9,LOW);
-            Serial.println(0);
+            //Serial.println(0);
             step--;
             break;
-      default:
-            Serial.println(1);
+      //default:
+            //Serial.println(1);
   }
    if(step == 5){//a falta de sensores...
      step = 0;

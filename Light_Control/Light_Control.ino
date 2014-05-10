@@ -36,10 +36,10 @@ void perform_LightControl(String action, int pinRelay1, int *stateRelay1){
     else
       estado = "OFF";
     digitalWrite(pinRelay1, *stateRelay1);
-    Serial.println("0");  // Respuesta OK
+    //Serial.println("0");  // Respuesta OK
     delay(500);
   }
   else{   
-    Serial.println("1");  // Respuesta de error
+    //Serial.println("1");  // Respuesta de error
   }      
 }

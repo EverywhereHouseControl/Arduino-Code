@@ -19,7 +19,7 @@ void openDoor_Intercom(){
 void loop_Intercom(){
     readDoor = digitalRead(pinSignal);
     if(readDoor == HIGH){
-      Serial.println("SEND-INTERCOM-DETECT");
+      Serial.println("INTERRUPT-INTERCOM");
       readDoor = LOW;
       delay(1000);
     }

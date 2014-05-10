@@ -53,7 +53,7 @@ void IR(String s){
                         //Serial.println(data);
 			ir.sendIR(data,nbits,0,protocol);
                         recIR.enableIRIn();
-			Serial.println("0");
+			//Serial.println("0");
                         //delay(500);
 			break;
 		}

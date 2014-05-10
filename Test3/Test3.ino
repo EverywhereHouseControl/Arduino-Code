@@ -1,4 +1,4 @@
-/* This is a sketch wich tests IRControl, light control and blinds
+/* This is a sketch wich tests IRControl, light control, blinds, temperature and Intercom
 *  in the same Arduino
 */
 #include <string.h>
@@ -14,8 +14,7 @@ int stateRelay1;
 const int service_lights = 200;
 const int service_IR = 193;
 const int service_blinds = 0;
-
-//  IR_Control global variables
+const int service_temp = 2;
 
 
 void setup(){
@@ -29,6 +28,7 @@ void setup(){
 void loop(){
   loop_IR();
   loop_temp();
+  loop_Intercom();
   if(Serial.available()){
     delay(20);  //  necesary to wait the input to be ready
     char input[32]="";
@@ -51,39 +51,35 @@ void loop(){
     //separateInput(i, input, &service, &action);
     switch(service.toInt()){
       case service_lights:    //lights
-        Serial.print(command); Serial.print("-");      
-        Serial.print("LIGHTS"); Serial.print("-");
         if(command == "SEND")
           perform_LightControl(action, pinRelay1, &stateRelay1);
-        else
-          getLightsState();
+	Serial.print("UPDATE"); Serial.print("-");      
+        Serial.print(service_lights); Serial.print("-");
+        getLightsState();
         break;   
       case service_IR:    //tv IR
-        Serial.print(command); Serial.print("-");      
-        Serial.print("TV"); Serial.print("-");
         if(command == "SEND")
           IR(action);
-        else
-          getIRstate();
+        Serial.print("UPDATE"); Serial.print("-");      
+        Serial.print(service_IR); Serial.print("-");
+        getIRstate();
         break;
       case service_blinds:
-          Serial.print(command); Serial.print("-");      
-          Serial.print("BLINDS"); Serial.print("-");
-          if(command == "SEND")
-            action_blinds(action);
-          else
-            getBlindsState();
-          break;
-      case 2:
-          Serial.print(command); Serial.print("-");
-          Serial.print(service_blinds); Serial.print("-");
-          if(command == "SEND")
-            fijarTemperatura(action);
-          else
-            getTempState();
-          break;
+        if(command == "SEND")
+		action_blinds(action);
+	Serial.print("UPDATE"); Serial.print("-");      
+        Serial.print(service_blinds); Serial.print("-");
+        getBlindsState();
+        break;
+      case service_temp:
+      	if(command == "SEND")
+        	fijarTemperatura(action);
+	Serial.print("UPDATE"); Serial.print("-");
+        Serial.print(service_temp); Serial.print("-"); 
+        getTempState();
+        break;
       default:
-        Serial.println("-1");
+        Serial.println("ERROR");
         break;
     }  
     Serial.flush();//while(Serial.available()){ Serial.read(); }
