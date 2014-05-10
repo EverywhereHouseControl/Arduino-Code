@@ -10,6 +10,9 @@
 int pinRelay1 = 4;
 int stateRelay1;
 
+//***idDevice***
+const int idDevice = 46;
+
 //***idServices***
 const int service_lights = 200;
 const int service_IR = 193;
@@ -53,28 +56,28 @@ void loop(){
       case service_lights:    //lights
         if(command == "SEND")
           perform_LightControl(action, pinRelay1, &stateRelay1);
-	Serial.print("UPDATE"); Serial.print("-");      
+	Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");
         Serial.print(service_lights); Serial.print("-");
         getLightsState();
         break;   
       case service_IR:    //tv IR
         if(command == "SEND")
           IR(action);
-        Serial.print("UPDATE"); Serial.print("-");      
+        Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");      
         Serial.print(service_IR); Serial.print("-");
         getIRstate();
         break;
       case service_blinds:
         if(command == "SEND")
 		action_blinds(action);
-	Serial.print("UPDATE"); Serial.print("-");      
+	Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");      
         Serial.print(service_blinds); Serial.print("-");
         getBlindsState();
         break;
       case service_temp:
       	if(command == "SEND")
         	fijarTemperatura(action);
-	Serial.print("UPDATE"); Serial.print("-");
+	Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");
         Serial.print(service_temp); Serial.print("-"); 
         getTempState();
         break;
