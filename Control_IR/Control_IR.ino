@@ -13,13 +13,15 @@ void setup_IR(){
   recIR.enableIRIn();
 }
 
-void loop_IR(){
+void loop_IR(int idDevice,int idService){
   if(recIR.decode(&r)) {
     dataA = "0";
     dataA = dataA + r.decode_type;
     dataA = dataA + r.bits;
     dataA = dataA + r.value;
-    //Serial.println(data);
+    Serial.print("UPDATE-"); Serial.print(idDevice);
+    Serial.print("-"); Serial.print(idService);
+    Serial.print("-"); Serial.println(dataA);
     recIR.resume();
   }
 }

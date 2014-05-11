@@ -16,10 +16,12 @@ void openDoor_Intercom(){
   digitalWrite(pinDoor,LOW);  
 }
 
-void loop_Intercom(){
+void loop_Intercom(int idDevice, int idService){
     readDoor = digitalRead(pinSignal);
     if(readDoor == HIGH){
-      Serial.println("INTERRUPT-INTERCOM");
+      Serial.print("INTERRUPT-"); Serial.print(idDevice);
+      Serial.print("-"); Serial.print(idService);
+      Serial.println("Llaman-a-la-puerta");
       readDoor = LOW;
       delay(1000);
     }
