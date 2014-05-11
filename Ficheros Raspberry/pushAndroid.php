@@ -4,8 +4,7 @@
 $api = $_GET['api'];
 define( 'API_ACCESS_KEY', '$api' );
 
-$regID = $_GET['id'];
-$registrationIds = array("$regID");
+$registrationIds = array($_GET['regID']);
 
 $message = $_GET['msg'];
 
