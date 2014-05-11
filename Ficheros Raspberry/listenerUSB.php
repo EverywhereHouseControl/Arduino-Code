@@ -7,7 +7,7 @@ function listener(){
 			$read = "UPDATE-46-192-0N";//fread($fp,64);
                         if($read != 0){
 				list($command, $idDevice, $idService, $data) = explode("-", $read);
-				header("Location: ehcontrol.net/EHControlConnect/updateState.php
+				header("Location: ehcontrol.net/EHControlConnect/index.php
 ?command=$command&iddevice=$idDevice&idservice=$idService&action=0&data=$data");
 				$fp2 = fopen('/home/ehc/log.txt','a+');
 				$date = date("d-m-Y");
