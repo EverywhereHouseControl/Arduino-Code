@@ -4,7 +4,7 @@ function listener(){
 		$fp =fopen('/dev/ttyACM0','r');//truncate
 		sleep(1);
 		while(true){
-			$read = "UPDATE-46-192-0N";//fread($fp,64);
+			$read = fread($fp,64);
                         if($read != 0){
 				list($command, $idDevice, $idService, $data) = explode("-", $read);
 				header("Location: ehcontrol.net/EHControlConnect/index.php
