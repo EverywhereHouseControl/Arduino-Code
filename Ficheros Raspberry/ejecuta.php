@@ -26,5 +26,6 @@ $port1 = "/dev/tty$port";
 $arg2 ="$command-$idService-$idAction";
 $valor = $port1.' '.$arg2;
 echo exec("/usr/bin/python /home/ehc/scripts/enviar.py $valor");
+exit(0);
 
 ?>
