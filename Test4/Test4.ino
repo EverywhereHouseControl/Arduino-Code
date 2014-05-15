@@ -1,4 +1,4 @@
-/* This is a sketch wich tests IRControl, light control, blinds, temperature and Intercom
+/* This is a sketch wich tests IRControl, light control, unsensored blind, sensored blind, temperature sensor, Intercom and light sensor
 *  in the same Arduino
 */
 #include <string.h>
@@ -22,7 +22,8 @@ const int service_IR = 193;
 const int service_blinds = 0;
 const int service_temp = 2;
 const int service_blindSensors = 999; //Need new code
-const int service_lightSensor = 999; //Need new code
+const int service_lightSensor = 998; //Need new code
+const int service_intercom = 997;
 
 
 void setup(){
@@ -31,13 +32,13 @@ void setup(){
   setup_IR();
   setup_blinds();
   setup_temp(); 
-  setup_blindSensors(&stateBlindSensors)
+  setup_blindSensors(&stateBlindSensors);
 }
 
 void loop(){
-  loop_IR();
+  loop_IR(idDevice, service_IR);
   loop_temp();
-  loop_Intercom();
+  loop_Intercom(idDevice, service_intercom);
   if(Serial.available()){
     delay(20);  //  necesary to wait the input to be ready
     char input[32]="";
@@ -84,7 +85,7 @@ void loop(){
         if(command == "SEND")
 		action_blindSensors(action, &stateBlindSensors);
 	Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");      
-        Serial.print(service_blindSensor); Serial.print("-");
+        Serial.print(service_blindSensors); Serial.print("-");
         getBlindSensorsState();
         break;
       case service_lightSensor:
