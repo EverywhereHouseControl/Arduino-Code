@@ -14,7 +14,7 @@ int Si_v; // Sensor input pin value (Range: 0 - 1023)
 void getLightSensorState() {
     if (Si_v >= 0 && Si_v < Sep1)
         Serial.println("Low");
-    else if (Si_v >= Sep1 & Si_v < Sep2)
+    else if (Si_v >= Sep1 && Si_v < Sep2)
         Serial.println("Medium");
     else if (Si_v >= Sep2 && Si_v < 1024)
         Serial.println("High");
