@@ -37,7 +37,7 @@ void setup_blindSensors(int *st) {
     digitalWrite(UDo_p, UDo_v);
 
     // Set state
-    state = st;
+    state = *st;
 }
 
 void action_blindSensors(String s, int *st) {
@@ -74,6 +74,7 @@ void action_blindSensors(String s, int *st) {
                 default:
                     Serial.println("1_State Error"); //State Error
             }
+            break;
         case 1: // Up step blind
             switch (state) {
                 case 0: //BOTTOM
@@ -105,6 +106,7 @@ void action_blindSensors(String s, int *st) {
                 default:
                     Serial.println("1_State error"); //State Error
             }
+            break;
         default:
             Serial.println("1_Code error"); // Bad recibed code
             // Gestionar error
@@ -117,6 +119,5 @@ void action_blindSensors(String s, int *st) {
     digitalWrite(Eo_p, Eo_v);
     digitalWrite(UDo_p, UDo_v);
     state = newState;
-    }
     *st = state;
 }
