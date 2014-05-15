@@ -1,14 +1,21 @@
 <?php
 
 function listener(){
-		$fp =fopen('/dev/ttyACM0','r');//truncate
+		//change to use Zigbee /dev/ttyACM0 -> /dev/ttyUSB0
+		$fp =fopen('/dev/ttyUSB0','r');//truncate
 		sleep(1);
 		while(true){
 			$read = fread($fp,64);
-                        if($read != 0){
+                        if($read != FALSE){
+				//UPDATE dataBase
 				list($command, $idDevice, $idService, $data) = explode("-", $read);
-				header("Location: ehcontrol.net/EHControlConnect/index.php
-?command=$command&iddevice=$idDevice&idservice=$idService&action=0&data=$data");
+				$ext = "command=$command&iddevice=$idDevice&idservice=$idService&action=0&data=$data";
+				$host = "http://ehcontrol.net";
+				$url = "$host/EHControlConnect/index.php?$ext";
+				$ch = curl_init($url);
+				$result = curl_exec($ch);
+				curl_close($ch);
+				//file log
 				$fp2 = fopen('/home/ehc/log.txt','a+');
 				$date = date("d-m-Y");
 				$hour = date("H:i:s");
