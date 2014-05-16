@@ -33,7 +33,7 @@ void loop(){
   loop_temp();
   loop_Intercom();
   if(Serial.available()){
-    delay(20);  //  necesary to wait the input to be ready
+    delay(30);  //  necesary to wait the input to be ready
     char input[32]="";
     String command;
     String service;
