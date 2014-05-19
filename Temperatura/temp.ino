@@ -1,11 +1,11 @@
-
+const int tempPin = A0; 
+const int tempPin2 = 6;
 float temp;
-int tempPin = 0; // Definimos la entrada en pin A0
 int tempObjetivo = 0;
 void setup_temp(){
     // Abre puerto serial y lo configura a 9600 bps
     //Serial.begin(9600);
-    pinMode(13,OUTPUT);
+    pinMode(tempPin2,OUTPUT);
 }
 
 void fijarTemperatura(String t){
@@ -21,9 +21,9 @@ void loop_temp(){
     temp = analogRead(tempPin); 
     temp = (5.0 * temp * 100)/1024.0;
     if(temp < tempObjetivo){
-      digitalWrite(13,HIGH);
+      digitalWrite(tempPin2,HIGH);
     }
     else{
-      digitalWrite(13,LOW); 
+      digitalWrite(tempPin2,LOW); 
     }
 }

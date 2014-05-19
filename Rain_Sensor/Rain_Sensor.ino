@@ -1,29 +1,16 @@
-const int ledPin= 13;
-const int inputPin= 7;
-int state;
+const int inputPinRain= 7;
+unsigned long last_timeRain;//last time sensor was activated in milliseconds
 
-void setup(){
-   pinMode(ledPin, OUTPUT);
-   pinMode(inputPin, INPUT);
-   Serial.begin(9600);
-   state = LOW;
+void setup_Rain(){
+	pinMode(inputPinRain,INPUT);
+	last_timeRain = 0;
 }
 
-void loop(){
-
-   int value= digitalRead(inputPin);
-   
-   if (value == HIGH && state == LOW){
-      digitalWrite(ledPin, HIGH);
-      delay(100);
-      digitalWrite(ledPin, LOW);
-      Serial.println("101");
-      delay(100);
-	  state = HIGH;
-   }
-   else{
-      state = LOW;
-   }
-
+void loop_Rain(int idDevice,int idService){
+	int valueR = digitalRead(inputPinRain);
+   	if(((valueR == HIGH) && (last_timeRain == 0 )) || ((valueR == HIGH) && (last_timeRain+600000<millis()))){
+      		Serial.print("UPDATE-"); Serial.print(idDevice); Serial.print("-"); Serial.print(idService); Serial.print("-LLuvia");
+      		last_timeRain = millis();
+   	}
 }
 
