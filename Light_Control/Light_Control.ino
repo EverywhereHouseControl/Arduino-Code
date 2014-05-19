@@ -60,7 +60,7 @@ void loop_LightControl(){
   int currentSensorState1 = digitalRead(pinSensor1);
   int currentSensorState2 = digitalRead(pinSensor2);
 
-  if((currentSensorState1 == LOW) && sensorState1 == HIGH) || (currentSensorState1 == HIGH) && sensorState1 == LOW)){
+  if((currentSensorState1 == LOW) && (sensorState1 == HIGH) || (currentSensorState1 == HIGH) && (sensorState1 == LOW)){
     Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");
     Serial.print(service_lights); Serial.print("-");Serial.print(estado);
     
@@ -70,7 +70,7 @@ void loop_LightControl(){
       estado = "OFF";
   }
 
-  if((currentSensorState2 == LOW) && sensorState2 == HIGH) || (currentSensorState2 == HIGH) && sensorState2 == LOW)){
+  if((currentSensorState2 == LOW) && (sensorState2 == HIGH) || (currentSensorState2 == HIGH) && (sensorState2 == LOW)){
     Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");
     Serial.print(service_lights); Serial.print("-");Serial.print(estado);
     
