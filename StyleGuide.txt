@@ -1,0 +1,73 @@
+DESCRIPCIÓN: Este documento especifica la guía de estilo a seguir en los ficheros de código fuente para Arduino.
+
+- Cada fichero tendrá un prologo que contendrá una breve descripción e indicará el autor del mismo.
+Ejemplo:
+/*************************************************************/
+/* AUTOR: Nombre */
+/* */
+/* PROPÓSITO: */
+/* */
+/*************************************************************/
+
+
+- Los métodos y bloques importantes de código incluirán comentarios explicativos que irán situados junto al código en cuestión. Si el comentario tiene mas de una linea se situara antes del código a comentar.
+Ejemplo:
+/*
+*  Comentario que explica la función de un método
+*  o de una sección de código
+*/
+
+
+-  Los datos pueden describirse brevemente en la misma linea en que se definan.
+Ejemplo:
+int alu_teoria;  // Número de alumnos por grupo teoría
+int alu_practicas; // Número de alumnos por grupo prácticas
+
+
+- Los finales de los métodos y estructuras pueden indicarse con un comentario al final de la linea en que terminen.
+Ejemplo:
+int i;
+boolean correcto
+for (i = 1; i <= 4; i++) {
+	.
+	.
+	.
+}; // FOR
+
+
+- Todo el código irá debidamente sangrado para mostrar fácilmente la estructura lógica del mismo. El sangrado estará compuesto por 4 espacios.
+
+
+- Se utilizaran espacios en blanco para separar los elementos de una expresión y las listas de variables separadas por comas.
+Ejemplo:
+x = ( y / z ) + 2;
+método(arg1, arg2);
+
+
+- Los identificadores que dan nombre a subprogramas, constantes, tipos o variables han de colaborar a la autodocumentación del programa, aportando información sobre su cometido. Es recomendable:
+	+ Elegir nombres comprensibles y en relación con la tarea que corresponda al objeto nombrado.
+	+ Seguir un criterio uniforme con las abreviaturas de nombres. Elegir abreviaturas que sugieran el nombre completo.
+	+ Utilizar prefijos y sufijos cuando sea necesario.
+	+ Usar el carácter ‘_’ o de una letra mayúscula para distinguir las palabras que lo forman.
+
+
+- Las variables y nombres de métodos se escribirán en minúscula.
+Ejemplo:
+num_alumnos
+numAlumnos ? Este estilo de nombrado se denomina: CapWords, CamelCase o StudlyCaps.
+
+
+- Las constantes e identificadores del preprocesador se escribirán en mayúscula.
+Ejemplo:
+MAX_ALUMNOS
+
+
+- El símbolo { de comienzo de un método irá en la misma linea de su cabecera y el símbolo '}' irá colocado al final del mismo en una linea independiente sangrado a la misma altura que su cabecera.
+Ejemplo:
+for(i = 0; i < N; i++) {
+	vect[i] = vect2[i];
+	suma = suma + vect[i];
+};
+
+
+Todo los ficheros de código fuente estarán en inglés.
