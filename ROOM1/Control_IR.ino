@@ -8,46 +8,46 @@ decode_results r;
 String dataA = "0";
 
 void setup_IR(){
-    //Serial.begin(9600);
-    pinMode(pinRead_IR,INPUT);  
-    recIR.enableIRIn();
+	//Serial.begin(9600);
+  	pinMode(12,INPUT);  
+  	recIR.enableIRIn();
 }
 
-void check_IR(){
-    if(recIR.decode(&r)) {
-        dataA = "0";
-        dataA = dataA + r.decode_type;
-        dataA = dataA + r.bits;
-        dataA = dataA + r.value;
-        Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");
-        Serial.print(service_IR); Serial.print("-");
-        Serial.println(dataA);
-        recIR.resume();
-    }
+void loop_IR(int idDevice,int idService){
+  	if(recIR.decode(&r)) {
+    		dataA = "0";
+    		dataA = dataA + r.decode_type;
+   		dataA = dataA + r.bits;
+    		dataA = dataA + r.value;
+    		Serial.print("UPDATE-"); Serial.print(idDevice);
+    		Serial.print("-"); Serial.print(idService);
+    		Serial.print("-"); Serial.println(dataA);
+    		recIR.resume();
+  	}
 }
 
 void getIRstate(){
-  Serial.println(dataA);
+	Serial.println(dataA);
 }
 
 void IR(String s){
-    dataA = s;
-    int length = s.length()+1;
-    //Serial.println(s);
-    char input[length];
-    s.toCharArray(input,length);
-    int i = 0;
+        dataA = s;
+        int l = s.length()+1;
+        //Serial.println(s);
+        char input[l];
+        s.toCharArray(input,l);
+        int i = 0;
 	char c = input[i]; i++;
 	switch(c){
 		case '0': {
-			char datac[16];
+			char datac[10];
 			datac[0] = input[i]; i++;
 			int protocol = atoi(datac);
 			datac[0] = input[i]; i++;
 			datac[1] = input[i]; i++;
 			int nbits = atoi(datac);
                         int j = 0;
-			while(i <length){
+			while(i < l){
 				datac[j] = input[i];
 				i++; j++;
 			}
@@ -62,7 +62,7 @@ void IR(String s){
 		case '1': {
 			char buttons[2];
 			int j = 0;
-			while(i <length){
+			while(i < l){
 				if(j < 2){    
 					buttons[j] = input[i]; j++; i++;
                                 }
@@ -112,3 +112,5 @@ void IR(String s){
                 Serial.println("1");
     }
 }
+
+

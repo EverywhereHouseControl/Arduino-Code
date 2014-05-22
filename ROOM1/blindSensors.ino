@@ -104,6 +104,7 @@ void setup_blindSensors() {
     upDown = LOW;
     digitalWrite(enable_p, enable);
     digitalWrite(upDown_p, upDown);
+
 }
 
 /**
