@@ -49,22 +49,19 @@ void loop(){
 				case service_IR:    //IR
         				if(command == "SEND")
           					IR(action);
-					Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");
-        				Serial.print(service_IR); Serial.print("-");
+					Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-"); Serial.print(service_IR); Serial.print("-");
         				getIRstate();
         				break;
 				case service_lights:    //lights
         				if(command == "SEND")
           					perform_LightControl(action);
-					Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");
-        				Serial.print(service_lights); Serial.print("-");
+					Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-"); Serial.print(service_lights); Serial.print("-");
         				getLightsState();
         				break;
 				case service_blinds: //blinds
         				if(command == "SEND")
 						action_blindSensors(action);
-					Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-");      
-        				Serial.print(service_blinds); Serial.print("-");
+					Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-"); Serial.print(service_blinds); Serial.print("-");
         				getBlindSensorsState();
         				break;
 				default:

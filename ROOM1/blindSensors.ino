@@ -37,12 +37,16 @@ int newStateBlind = 0; // Future stateBlind
  * This function checks if any button of manual interface has been pressed.
  */
 void   manualControlCheck_blindSensors() {
-    upButton = digitalRead(upButton_p);
-    downButton = digitalRead(downButton_p);
+    // upButton = digitalRead(upButton_p);
+    upButton = debounce(upButton_p); // Ignore bouncing
+    // downButton = digitalRead(downButton_p);
+    downButton = debounce(downButton_p); // Ignore bouncing
     if (upButton == HIGH) {
         perform(1); // Up step
+        Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-"); Serial.print(service_blinds); Serial.print("-"); getBlindSensorsState();
     } else if (downButton == HIGH) {
         perform(0); // Down step
+        Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-"); Serial.print(service_blinds); Serial.print("-"); getBlindSensorsState();
     } else {
         // Do nothing
     }
@@ -104,7 +108,7 @@ void setup_blindSensors() {
     upDown = LOW;
     digitalWrite(enable_p, enable);
     digitalWrite(upDown_p, upDown);
-
+    Serial.print("UPDATE"); Serial.print("-"); Serial.print(idDevice); Serial.print("-"); Serial.print(service_blinds); Serial.print("-"); getBlindSensorsState();
 }
 
 /**
@@ -120,8 +124,8 @@ void action_blindSensors(String act) {
  * @param "action" is a input parameter that indicate the action to perform. It can be: '1' to up blind; '0' to down blind;
  */
 void perform(int action) {
-    Serial.println(action);
-    Serial.print("Ultimo estado = "); Serial.println(stateBlind);
+    //Serial.println(action);
+    // Serial.print("Ultimo estado = "); Serial.println(stateBlind);
     switch (action) {
         case 1: // Up step blind
             switch (stateBlind) {
@@ -131,9 +135,9 @@ void perform(int action) {
                     upDown = HIGH;
                     digitalWrite(enable_p, enable);
                     digitalWrite(upDown_p, upDown);
-                    Serial.println("Subiendo");
-                    Serial.print("Enable = "); Serial.println(enable);
-                    Serial.print("UpDown = "); Serial.println(upDown);
+                    // Serial.println("Subiendo");
+                    // Serial.print("Enable = "); Serial.println(enable);
+                    // Serial.print("UpDown = "); Serial.println(upDown);
                     // delay(1000); // TESTING
                     if (stateBlind == 0) {
                         do {
@@ -166,9 +170,9 @@ void perform(int action) {
                     upDown = LOW;
                     digitalWrite(enable_p, enable);
                     digitalWrite(upDown_p, upDown);
-                    Serial.println("Bajando");
-                    Serial.print("Enable = "); Serial.println(enable);
-                    Serial.print("UpDown = "); Serial.println(upDown);
+                    // Serial.println("Bajando");
+                    // Serial.print("Enable = "); Serial.println(enable);
+                    // Serial.print("UpDown = "); Serial.println(upDown);
                     // delay(1000); // TESTING
                     if (stateBlind == 2) {
                         do {
@@ -198,10 +202,10 @@ void perform(int action) {
     upDown = LOW;
     digitalWrite(enable_p, enable);
     digitalWrite(upDown_p, upDown);
-    Serial.print("Enable = "); Serial.println(enable);
-    Serial.print("UpDown = "); Serial.println(upDown);
+    // Serial.print("Enable = "); Serial.println(enable);
+    // Serial.print("UpDown = "); Serial.println(upDown);
     stateBlind = newStateBlind;
-    Serial.print("Estado actual = "); Serial.println(stateBlind);
+    // Serial.print("Estado actual = "); Serial.println(stateBlind);
 }
 
 /**
