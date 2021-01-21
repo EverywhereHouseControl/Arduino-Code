@@ -1,6 +1,6 @@
 Arduino code repository
 =======================
-This repository contains the Arduino code for <a href="http://ehcontrol.net/">Everywhere House Control project <img align="middle" src="http://ehcontrol.net/images/logo.png" width="70" height="70" /></a>
+This repository contains the Arduino code for Everywhere House Control project <img align="middle" src="https://avatars.githubusercontent.com/u/5992872?s=200&v=4" width="70" height="70" />
 
 ## License
 - The source code is distributed under the [GNU General Public License version 3](LICENSE.txt)
